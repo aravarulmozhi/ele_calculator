@@ -1,0 +1,46 @@
+.underMenuFooter{
+    /* position:absolute; */
+    bottom:0;
+    width:100%;
+    padding-top:20px; 
+    height:60px;   /* Height of the footer */
+}
+footer {
+    clear: both;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    position: relative;
+    padding-top: 20px;
+    border-top: 1px solid #404040;
+    background: #202020;
+    color: #FFF;
+    font-size:13px;
+}
+footer ul li{
+	list-style: none;
+}
+footer a{
+	color: #ffa400;
+}
+footer a:hover{
+	text-decoration:none;
+	color: #d28a0a;
+}
+footer .social_icon a {
+	text-decoration:none; 
+    border: 1px solid #FFF;
+    border-radius: 50%;
+    color: #FFF;
+    font-size: 16px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    -webkit-transition: all .2s ease-in;
+    transition: all .2s ease-in;
+    margin: 0 4px 24px 6px
+}
+footer .social_icon a:hover {
+    border-color: transparent;
+    background: #ffa400
+}

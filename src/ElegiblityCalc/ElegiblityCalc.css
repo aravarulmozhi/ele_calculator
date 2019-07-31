@@ -1,0 +1,133 @@
+[type="date"]{
+  background:#fff url("https://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/calendar_2.png")  97% 50% no-repeat;height: 60px;
+  height: 60px;
+  font-size: 20px;
+  width: 300px;
+}
+[type="date"]::-webkit-inner-spin-button {
+  display: none;
+}
+[type="date"]::-webkit-calendar-picker-indicator {
+  opacity: 0;
+}
+.input100{
+	height: 60px;
+  padding: 10px 0px 10px 10px;
+  font-size: 20px;
+  width: 400px;
+  border:0px;
+  border:1px solid #7b7979;
+}
+.input101{
+  height: 50px;
+  padding: 0px 0px 2px 10px;
+  font-size: 14px;
+  width: 300px;
+  border-top:1px solid #7b7979;
+  border-right:1px solid #7b7979;
+  border-bottom:1px solid #7b7979;
+  border-left:.5px solid #7b7979;
+}
+input:focus, textarea:focus {
+  box-shadow:0;
+  border: 1px solid red;
+  line-height: 1.2;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+}
+
+.contact100-form{
+  display: flex;
+  flex-flow: row wrap;
+  align-items: center;
+  padding: 10px;
+  margin-left:10%;
+  margin-right:10%;
+}
+.wrap-input100{
+  padding: 10px;
+  display:block;
+  margin-left: auto;
+  margin-right: auto;
+}
+.wrap-contact100{
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  background:#fff;
+  border-radius:2px;
+
+}
+
+.Submitbutton{
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 150px;
+  justify-content: center;
+  align-items: center;
+  padding: 0 20px;
+  height: 50px;
+  background-color: #533379;
+  border-radius: 2px;
+  font-family: OpenSans-Regular;
+  font-size: 18px;
+  color: #fff;
+  line-height: 1.2;
+  -webkit-transition: all 0.4s;
+  -o-transition: all 0.4s;
+  -moz-transition: all 0.4s;
+  transition: all 0.4s;
+  cursor: pointer;
+}
+.Submitbutton:hover {
+  background-color: #ffa400;
+  color:white;
+}
+.contact100-form-symbol{
+  color:orange;
+  padding: 35px;
+  height: 100%;
+  background-color: #ffffff;
+  border: 2px solid #00000099;
+  width: 200px;
+  height:200px;
+  border-radius: 50%;
+  justify-content: center;
+}
+@media (min-width: 319px) and (max-width: 600px){
+  .eleCal{
+    font-size: 11px;
+  }
+  .wrap-contact100{
+    width: 100%;
+  }  
+  .input100{
+    width:250px;
+    font-size:12px;
+  }
+  .contact100-form-symbol{
+    width: 100px;
+    height:100px;
+    padding: 25px;
+
+  }
+}
+.btn-secondary:not(:disabled):not(.disabled).active, .btn-secondary:not(:disabled):not(.disabled):active, .show>.btn-secondary.dropdown-toggle{
+  color:#fff;
+  background-color:#ffa400 !important;
+  border-color:#ffa400;
+}
+.btn.focus,.btn:focus{
+  outline: 0;
+  box-shadow: 0 0 0 0.1rem #ffa40059!important;
+}
+.innerBtn label{
+  height: 50px;
+  padding:10px;
+  border-radius:0px; 
+}
