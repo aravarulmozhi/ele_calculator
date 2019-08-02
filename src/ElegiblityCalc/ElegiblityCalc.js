@@ -1,4 +1,5 @@
 import React,{Component} from'react';
+import { Transition } from 'react-transition-group';
 import './ElegiblityCalc.css';
 import ElegiblityTable from './ElegiblityTable';
 import './calculationMethods'
@@ -8,13 +9,14 @@ class ElegiblityCalc extends Component{
 		this.state={
 			dob:0,
 			monthlyIncome:0,
-			anyObligations:"No",
+			anyObligations:false,
 			roi:0,
 			ccObinput:0,
 			gloan:0,
 			hloan:"No",
 			otherloan:0,
 		}
+		this.divRef = React.createRef()
 	}
 
 	calYearEle=(d)=>{
@@ -51,7 +53,7 @@ class ElegiblityCalc extends Component{
 			return alert("Sorry Your Salary is too Low to take Loan ?");
 			}
 	  }
-
+  
 	enableEdit=(byId,plcMsg)=>{
 		let selDom=document.getElementById(byId);
 		selDom.disabled=false;
@@ -75,8 +77,8 @@ class ElegiblityCalc extends Component{
 		let claSalPer=this.calSalEle(this.state.monthlyIncome);
 		console.log(claSalPer);
 	}
-
 render(){
+	let boxUp= ["swing-in-top-fwd"];
 		return(
 			<div className="eleCal">
 			<div className="text-center mb-n4">
@@ -100,7 +102,6 @@ render(){
 						type="number"
 						autoComplete="off"
 						onChange={(e)=>this.setState({monthlyIncome:e.target.value,})}/>
-					   
 				   </div>        
 			   </div>
 				<div className="text-center pt-5">
@@ -109,14 +110,24 @@ render(){
 			   <div className="text-center validate-form flex-sb flex-w p-1">
 
 			   <div className="btn-group btn-group-toggle" data-toggle="buttons">
-					<label className="btn btn-secondary" onClick={()=>this.setState({anyObligations:"Yes"})}>
+					<label className="btn btn-secondary" onClick={()=>{
+						this.setState({anyObligations:true})
+					}
+				}>
 						<input type="radio"
 							id="option1"
 							value="Yes"
 							autoComplete="off"
 							/> Yes
 					</label>
-					<label className="btn btn-secondary active" onClick={()=>this.setState({anyObligations:"No"})}>
+					<label className="btn btn-secondary active" onClick={()=>{
+						this.setState({
+							anyObligations:false,
+							ccObinput:0,
+							gloan:0,
+							otherloan:0,
+							hloan:false})
+					}}>
 						<input type="radio"
 							id="option2"
 							value="No"
@@ -126,20 +137,24 @@ render(){
 					</label>	
 				</div>
 				{ 
-					this.state.anyObligations==="Yes" ? 
-
-				<div>
+					this.state.anyObligations ?
+					<div id="addThis" className={boxUp.join(' ')}>
 					<div className="contact100-form validate-form flex-sb flex-w p-10 bg-info b-3 rounded-top">
 					<div className="wrap-input100 rs1 validate-input">
 					<div className="btn-group btn-group-toggle innerBtn" data-toggle="buttons">
-									<label className="btn btn-secondary" onClick={()=>{this.enableEdit('ccObinput','Enter Total Credit Card Outstanding Amount')}}>
+									<label className="btn btn-secondary" onClick={()=>{
+										this.enableEdit('ccObinput','Enter Total Credit Card Outstanding Amount')
+									}}>
 										<input type="radio"
 											id="option1"
 											value="Yes"
 											autoComplete="off"
 											/> Yes
 									</label>
-									<label className="btn btn-secondary active" onClick={()=>{this.disAbleEdit('ccObinput','Any Credit Card Outstanding Amount ?')}}>
+									<label className="btn btn-secondary active" onClick={()=>{
+										this.setState({ccObinput:0})
+										this.disAbleEdit('ccObinput','Any Credit Card Outstanding Amount ?')
+									}}>
 										<input type="radio"
 											id="option2"
 											value="No"
@@ -167,7 +182,10 @@ render(){
 											
 											/> Yes
 									</label>
-									<label className="btn btn-secondary active" onClick={()=>{this.disAbleEdit('gloan','Any Gold Loan ?')}}>
+									<label className="btn btn-secondary active" onClick={()=>{
+										this.setState({gloan:0})
+										this.disAbleEdit('gloan','Any Gold Loan ?')
+									}}>
 										<input type="radio"
 											id="option2"
 											value="No"
@@ -195,7 +213,10 @@ render(){
 											autoComplete="off"											
 											/> Yes
 									</label>
-									<label className="btn btn-secondary active" onClick={()=>{this.disAbleEdit('otherloan','Having Any Other Loans ?')}}>
+									<label className="btn btn-secondary active" onClick={()=>{
+										this.setState({otherloan:0})
+										this.disAbleEdit('otherloan','Having Any Other Loans ?')
+									}}>
 										<input type="radio"
 											id="option2"
 											value="No"
@@ -214,18 +235,19 @@ render(){
 							/>
 					</div>
 
-					{this.state.monthlyIncome >=75000 ? 
+					{
+						this.state.monthlyIncome >=75000 ? 
 					<div className="wrap-input100 rs1 validate-input">
 					<h5 style={{color:"white"}}>Having Any Home Loan ?	
 					<div className="btn-group btn-group-toggle innerBtn pa2" data-toggle="buttons">
-									<label className="btn btn-secondary" onClick={()=>this.setState({hloan:"Yes"})}>
+									<label className="btn btn-secondary" onClick={()=>this.setState({hloan:true})}>
 										<input type="radio"
 											id="option1"
 											value="Yes"
 											autoComplete="off"
 											/> Yes
 									</label>
-									<label className="btn btn-secondary active" onClick={()=>this.setState({hloan:"No"})}>
+									<label className="btn btn-secondary active" onClick={()=>this.setState({hloan:false})}>
 										<input type="radio"
 											id="option2"
 											value="No"
@@ -236,28 +258,22 @@ render(){
 									<br/>
 									<br/>
 									
-					</div>
-							</h5>
-					</div>
-				:
-				<div></div>
-				}
-
-
-
-					</div>
-
-
-
-
-
+									</div>
+									</h5>
+									</div>
+									:
+								<div></div>
+							}
+							</div>
+						</div>
+						:
+						<div></div>
+					}
 				</div>
-				 : <p></p>}
-				
-				</div>
+
 				<div className="contact100-form validate-form flex-sb flex-w p-1">
 				 <div className="wrap-input100 rs1 validate-input">
-				 <p className="input100" style={{marginTop:"15px"}}>Total Oblication: {this.totalOblicationFun()}</p>
+				 <p className="input100" style={{marginTop:"15px"}}>Your Total Oblication Is Rs:{this.totalOblicationFun()}</p>
 				</div>
 				<div className="wrap-input100 rs1 validate-input">
 					<input 
