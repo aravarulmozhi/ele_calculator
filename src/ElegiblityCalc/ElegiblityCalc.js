@@ -2,7 +2,6 @@ import React,{Component} from'react';
 import { Transition } from 'react-transition-group';
 import './ElegiblityCalc.css';
 import ElegiblityTable from './ElegiblityTable';
-import './calculationMethods'
 class ElegiblityCalc extends Component{
 	constructor(){
 		super();
@@ -15,14 +14,48 @@ class ElegiblityCalc extends Component{
 			gloan:0,
 			hloan:"No",
 			otherloan:0,
+			isTableLive:false
 		}
 		this.divRef = React.createRef()
 	}
+conv_number=(expr,decplaces)=>{
+    var str = "" + Math.round(eval(expr) * Math.pow(10,decplaces));
+      while (str.length <= decplaces) {
+      str = "0" + str;
+}
+var decpoint = str.length - decplaces;
+return (str.substring(0,decpoint) + "." + str.substring(decpoint,str.length));
+
+}
+
+PV=(rate,per,nper,pmt,fv)=>{
+   nper=parseFloat(nper);
+   pmt=parseFloat(pmt);
+   fv=parseFloat(fv);
+    let pv_value,x,y;
+    rate=eval((rate)/(per*100))
+    if((pmt==0)||(nper==0)){
+        alert("can't calculate with zero");
+        return(0);
+    }
+    if(rate==0)//interest rate is 0
+    {
+        pv_value =-(fv+(pmt*nper));
+    }
+    else{
+    x = Math.pow(1 + rate, -nper);
+      y = Math.pow(1 + rate, nper);
+      pv_value = - ( x * ( fv * rate - pmt + y * pmt )) / rate;
+    }
+    
+    pv_value = this.conv_number(pv_value,2);
+    return (pv_value);
+}
 
 	calYearEle=(d)=>{
 		let todayAge=(new Date().getFullYear())-(new Date(`${d}`).getFullYear());
 		let yearEle=(ua)=>{
-			if(ua>=23&&ua<=53){
+			if(ua >=23&& ua<=53){
 				return 5;
 			}else if(ua===54){
 				return 4;
@@ -71,12 +104,38 @@ class ElegiblityCalc extends Component{
 		let otherloan=Number(this.state.otherloan);
 		return ccObinput+gloan+otherloan;
 	}
-  	addValue=()=>{
-		let tenure=this.calYearEle(`${this.state.dob}`);
-		console.log(tenure);
-		let claSalPer=this.calSalEle(this.state.monthlyIncome);
-		console.log(claSalPer);
+	eleEmi=()=>{
+		let gross_income=this.state.monthlyIncome;
+		let ex_emi=this.totalOblicationFun()
+		let sal_base=this.calSalEle(gross_income)
+		let ele_emi=((gross_income)*(sal_base/100)-ex_emi)
+		return ele_emi;
 	}
+
+	resultValues=()=>{
+		//row
+		let elg_emi=this.eleEmi();
+		let tenure=this.calYearEle(`${this.state.dob}`);
+		let roi=this.state.roi;
+		for(let r=1;r<=tenure;r++){
+			let pv_year=r*12;
+			let pvValue=Math.round(this.PV(roi,12,pv_year,-elg_emi,0.05));
+			console.log(pvValue);
+		}
+	}
+
+  	addValue=()=>{
+  		if(this.state.dob===0 || this.state.monthlyIncome===0 || this.state.roi===0){
+  			alert("Please Fill the Valid Fields!")
+  		}else{
+  // 		let tenure=this.calYearEle(`${this.state.dob}`);
+		// console.log(tenure);
+		// let claSalPer=this.calSalEle(this.state.monthlyIncome);
+		// console.log(claSalPer);
+		return this.state;
+  		}
+	}
+
 render(){
 	let boxUp= ["swing-in-top-fwd"];
 		return(
@@ -87,13 +146,15 @@ render(){
 			</span>
 			</div>	
 		<div className="wrap-contact100">
-				<div className="text-center pt-5"><h1>{this.state.dob}</h1></div>
+				<div className="text-center pt-5"><h1>Elegiblity Calculator</h1></div>
 				<div className="contact100-form validate-form flex-sb flex-w p-1">
 					<div className="wrap-input100 rs1 validate-input">
 						 <input className="input100" 
 						 	id="we" placeholder="Please Enter your DOB"
 							type="text" onFocus={()=>document.getElementById('we').setAttribute("type", "date")}
-							onChange={(e)=>this.setState({dob:e.target.value,})}/>					 
+							onChange={(e)=>this.setState({dob:e.target.value,})}
+							required
+							/>					 
 					</div>
 				   <div className="wrap-input100 rs1 validate-input">
 					   <input 
@@ -231,7 +292,8 @@ render(){
 							placeholder=" Having Any Other Loans ?"
 							type="number" autoComplete="off"
 							onChange={(e)=>this.setState({otherloan:(e.target.value)})}
-							disabled	
+							disabled
+
 							/>
 					</div>
 
@@ -288,12 +350,10 @@ render(){
 				<div>
 				</div>
 				<div className="text-center pt-5">
-				<p className="Submitbutton mx-auto" onClick={this.addValue}>Submit</p>
+				<p className="Submitbutton mx-auto" onClick={this.resultValues}>Submit</p>
 				</div>
-				<div className="text-center p-2">
-				<ElegiblityTable StateVal={this.state}/>
-				</div>
-		</div>	
+				<ElegiblityTable staValu={this.state} totalOblication={this.totalOblicationFun()}/>	
+		</div>
 			</div>	
 
 		);
