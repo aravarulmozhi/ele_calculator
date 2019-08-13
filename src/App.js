@@ -29,8 +29,6 @@ render(){ return(
         <br/>
         <br/>
         <br/>
-        <br/>
-        <br/>
         <div>
         <ElegiblityCalc currentAgeChange={this.currentAgeChange} currentAge={this.state.currentAge} currentIncome={this.currentIncome}/>
         </div>
