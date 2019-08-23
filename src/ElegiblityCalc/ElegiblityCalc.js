@@ -96,7 +96,7 @@ render(){
 		<div className="wrap-contact100 ">
 
 				{this.state.route==="tabletoShow" ? <p className=" b pt-5 tc" >Click Here to Reset</p>:<p className=" b pt-5 tc"> </p>}
-				<div className="text-center pt-1"><h2>Eligiblity Calculator</h2></div>
+				<div className="text-center pt-1"><h2>Eligiblity Calculator.</h2></div>
 				{
 					this.state.route==="tabletoShow" ?
 					<div>
