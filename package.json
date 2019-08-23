@@ -10,7 +10,8 @@
     "react-number-format": "^4.2.0",
     "react-scripts": "3.0.1",
     "react-super-responsive-table": "^5.0.0",
-    "react-transition-group": "^4.2.1"
+    "react-transition-group": "^4.2.1",
+    "tachyons": "^4.11.1"
   },
   "scripts": {
     "start": "react-scripts start",
